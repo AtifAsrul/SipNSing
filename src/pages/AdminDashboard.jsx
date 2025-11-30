@@ -82,7 +82,7 @@ const AdminDashboard = () => {
     };
 
     const handleApprove = async (request) => {
-        const url = prompt(`Enter YouTube URL for "${request.song}" by ${request.artist}:`);
+        const url = prompt(`Enter YouTube URL for "${request.song}" by ${request.artist}:\n(Type "none" for no backing track)`);
         if (url) {
             await updateDoc(doc(db, 'requests', request.id), {
                 status: 'queued',
@@ -364,7 +364,7 @@ const AdminDashboard = () => {
                                                 className="w-full bg-slate-700 p-2 rounded text-white"
                                                 value={editForm.youtubeUrl}
                                                 onChange={e => setEditForm({ ...editForm, youtubeUrl: e.target.value })}
-                                                placeholder="YouTube URL"
+                                                placeholder="YouTube URL (or 'none')"
                                             />
                                             <div className="flex gap-2">
                                                 <button onClick={saveEdit} className="bg-green-600 text-white px-3 py-1 rounded flex items-center gap-1"><Save size={14} /> Save</button>

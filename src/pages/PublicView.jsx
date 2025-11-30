@@ -47,16 +47,16 @@ const PublicView = () => {
         },
         christmas: {
             bg: 'bg-slate-950',
-            text: 'text-green-400',
-            accent: 'bg-red-600',
-            gradient: 'from-red-600 to-green-600',
-            textGradient: 'from-white via-red-200 to-green-200',
-            button: 'bg-gradient-to-r from-red-700 to-green-700 hover:from-red-600 hover:to-green-600',
-            blob1: 'bg-red-600/20',
-            blob2: 'bg-green-600/20',
-            blob3: 'bg-yellow-500/10',
-            border: 'border-red-500/30',
-            shadow: 'shadow-red-500/20',
+            text: 'text-red-400',
+            accent: 'bg-green-600',
+            gradient: 'from-red-600 via-green-600 to-red-600',
+            textGradient: 'from-red-200 via-green-200 to-gold-200',
+            button: 'bg-gradient-to-r from-red-700 via-green-700 to-red-700 hover:from-red-600 hover:to-green-600',
+            blob1: 'bg-red-600/30',
+            blob2: 'bg-green-600/30',
+            blob3: 'bg-yellow-500/20',
+            border: 'border-red-500/50',
+            shadow: 'shadow-green-500/30',
             wait: 'text-green-400 bg-green-500/10 border-green-500/20'
         }
     };
@@ -169,31 +169,7 @@ const PublicView = () => {
                         <p className={`text-xs ${currentTheme.text} font-medium tracking-widest uppercase mt-1 transition-colors`}>Music Society</p>
                     </div>
 
-                    {nowPlaying && (
-                        <div className={`bg-slate-900/60 backdrop-blur-md rounded-2xl p-4 border ${currentTheme.border} shadow-xl shadow-purple-900/10 animate-fade-in-up transition-colors`}>
-                            <div className="flex items-center gap-4">
-                                <div className="relative shrink-0">
-                                    <div className="w-12 h-12 rounded-full bg-slate-950 flex items-center justify-center border border-slate-800 relative z-10">
-                                        <Disc3 className={`w-6 h-6 ${currentTheme.text} animate-spin-slow transition-colors`} />
-                                    </div>
-                                    <div className={`absolute inset-0 ${currentTheme.accent} blur-xl opacity-40 animate-pulse transition-colors`}></div>
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-2 mb-0.5">
-                                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full ${currentTheme.bg} bg-opacity-50 ${currentTheme.text} text-[10px] font-bold uppercase tracking-wider border border-white/5`}>
-                                            <span className={`w-1.5 h-1.5 rounded-full ${currentTheme.accent} animate-pulse`}></span>
-                                            Now Playing
-                                        </span>
-                                    </div>
-                                    <p className="text-white font-bold truncate text-lg leading-tight">{nowPlaying.song}</p>
-                                    <p className="text-slate-400 text-sm truncate flex items-center gap-1">
-                                        {nowPlaying.singerName}
-                                        {nowPlaying.igHandle && <span className={`${currentTheme.text} font-medium`}>@{nowPlaying.igHandle}</span>}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    )}
+
                 </header>
 
                 <main className="p-4 space-y-8">
@@ -351,6 +327,33 @@ const PublicView = () => {
                             </button>
                         </form>
                     </section>
+
+                    {/* Now Playing (Moved) */}
+                    {nowPlaying && (
+                        <div className={`bg-slate-900/60 backdrop-blur-md rounded-2xl p-4 border ${currentTheme.border} shadow-xl shadow-purple-900/10 animate-fade-in-up transition-colors`}>
+                            <div className="flex items-center gap-4">
+                                <div className="relative shrink-0">
+                                    <div className="w-12 h-12 rounded-full bg-slate-950 flex items-center justify-center border border-slate-800 relative z-10">
+                                        <Disc3 className={`w-6 h-6 ${currentTheme.text} animate-spin-slow transition-colors`} />
+                                    </div>
+                                    <div className={`absolute inset-0 ${currentTheme.accent} blur-xl opacity-40 animate-pulse transition-colors`}></div>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-2 mb-0.5">
+                                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full ${currentTheme.bg} bg-opacity-50 ${currentTheme.text} text-[10px] font-bold uppercase tracking-wider border border-white/5`}>
+                                            <span className={`w-1.5 h-1.5 rounded-full ${currentTheme.accent} animate-pulse`}></span>
+                                            Now Playing
+                                        </span>
+                                    </div>
+                                    <p className="text-white font-bold truncate text-lg leading-tight">{nowPlaying.song}</p>
+                                    <p className="text-slate-400 text-sm truncate flex items-center gap-1">
+                                        {nowPlaying.singerName}
+                                        {nowPlaying.igHandle && <span className={`${currentTheme.text} font-medium`}>@{nowPlaying.igHandle}</span>}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                     {/* Live Queue */}
                     <section>
