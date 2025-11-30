@@ -1,0 +1,15 @@
+
+# General
+log/
+*.log
+node_modules/
+.DS_Store
+
+# Firebase
+.firebase/
+firebase-debug.log
+firebase-debug.log.*
+
+# Secrets
+service-account.json
+sip-n-sing-app-b13d982cd91e.json
