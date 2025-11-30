@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc, serverTimestamp, where, limit, writeBatch, getDocs, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Play, Check, X, Search, Trash2, ExternalLink, Edit2, Save, History, ListMusic, AlertTriangle } from 'lucide-react';
+import { Play, Check, X, Search, Trash2, ExternalLink, Edit2, Save, History, ListMusic, AlertTriangle, Mic2, Disc3, Guitar } from 'lucide-react';
 
 const AdminDashboard = () => {
     const [requests, setRequests] = useState([]);
@@ -282,6 +282,25 @@ const AdminDashboard = () => {
                                                     {req.artist} • Requested by {req.singerName}
                                                     {req.igHandle && <span className="text-purple-400 ml-1">(@{req.igHandle})</span>}
                                                 </p>
+                                                <div className="flex flex-wrap gap-2 mt-2">
+                                                    {req.backingTrack === 'none' ? (
+                                                        <div className="flex items-center gap-2 bg-amber-900/30 border border-amber-500/30 px-2 py-1 rounded text-amber-200 text-xs">
+                                                            <Guitar size={14} />
+                                                            <span className="font-bold">Acoustic</span>
+                                                            {req.technicalNeeds && <span className="border-l border-amber-500/30 pl-2 ml-1">{req.technicalNeeds}</span>}
+                                                        </div>
+                                                    ) : req.backingTrack === 'original' ? (
+                                                        <div className="flex items-center gap-1.5 bg-teal-900/30 border border-teal-500/30 px-2 py-1 rounded text-teal-200 text-xs">
+                                                            <Disc3 size={14} />
+                                                            <span className="font-bold">Original</span>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="flex items-center gap-1.5 bg-indigo-900/30 border border-indigo-500/30 px-2 py-1 rounded text-indigo-200 text-xs">
+                                                            <Mic2 size={14} />
+                                                            <span className="font-bold">Karaoke</span>
+                                                        </div>
+                                                    )}
+                                                </div>
                                             </div>
                                             <div className="flex gap-2">
                                                 <button
@@ -361,6 +380,25 @@ const AdminDashboard = () => {
                                                     <p className="text-slate-400 text-sm truncate">
                                                         {req.singerName} {req.igHandle && <span className="text-purple-400">(@{req.igHandle})</span>}
                                                     </p>
+                                                    <div className="flex flex-wrap gap-2 mt-1 mb-1">
+                                                        {req.backingTrack === 'none' ? (
+                                                            <div className="flex items-center gap-2 text-amber-400 text-xs">
+                                                                <Guitar size={12} />
+                                                                <span className="font-bold">Acoustic</span>
+                                                                {req.technicalNeeds && <span className="text-amber-200/70 truncate max-w-[150px]">- {req.technicalNeeds}</span>}
+                                                            </div>
+                                                        ) : req.backingTrack === 'original' ? (
+                                                            <div className="flex items-center gap-1.5 text-teal-400 text-xs">
+                                                                <Disc3 size={12} />
+                                                                <span className="font-bold">Original</span>
+                                                            </div>
+                                                        ) : (
+                                                            <div className="flex items-center gap-1.5 text-indigo-400 text-xs">
+                                                                <Mic2 size={12} />
+                                                                <span className="font-bold">Karaoke</span>
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                     <a href={req.youtubeUrl} target="_blank" rel="noreferrer" className="text-xs text-blue-400 hover:underline truncate block">
                                                         {req.youtubeUrl}
                                                     </a>

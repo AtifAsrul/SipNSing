@@ -8,6 +8,8 @@ const PublicView = () => {
     const [igHandle, setIgHandle] = useState('');
     const [song, setSong] = useState('');
     const [artist, setArtist] = useState('');
+    const [backingTrack, setBackingTrack] = useState('karaoke');
+    const [technicalNeeds, setTechnicalNeeds] = useState('');
     const [queue, setQueue] = useState([]);
     const [nowPlaying, setNowPlaying] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -116,6 +118,8 @@ const PublicView = () => {
                     igHandle: igHandle || '',
                     song,
                     artist,
+                    backingTrack,
+                    technicalNeeds: backingTrack === 'none' ? technicalNeeds : null,
                     status: 'pending',
                     createdAt: serverTimestamp()
                 }),
@@ -127,6 +131,8 @@ const PublicView = () => {
             setIgHandle('');
             setSong('');
             setArtist('');
+            setBackingTrack('karaoke');
+            setTechnicalNeeds('');
             setTimeout(() => setSubmitted(false), 3000);
         } catch (error) {
             console.error("Error adding document: ", error);
@@ -255,12 +261,78 @@ const PublicView = () => {
                                 </div>
                             </div>
 
+                            <div className="space-y-3">
+                                <label className="text-xs font-medium text-slate-400 ml-1">Performance Style</label>
+                                <div className="space-y-3">
+                                    <div className="flex gap-2 p-1 bg-slate-950/50 rounded-xl border border-slate-800">
+                                        <button
+                                            type="button"
+                                            onClick={() => setBackingTrack('karaoke')} // Default to karaoke if they switch back
+                                            className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${backingTrack !== 'none'
+                                                ? `${currentTheme.bg} ${currentTheme.text} shadow-lg border border-white/10`
+                                                : 'text-slate-500 hover:text-slate-300'
+                                                }`}
+                                        >
+                                            Backing Track
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setBackingTrack('none')}
+                                            className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${backingTrack === 'none'
+                                                ? `${currentTheme.bg} ${currentTheme.text} shadow-lg border border-white/10`
+                                                : 'text-slate-500 hover:text-slate-300'
+                                                }`}
+                                        >
+                                            Acoustic / Acapella
+                                        </button>
+                                    </div>
+
+                                    {backingTrack === 'none' ? (
+                                        <div className="animate-fade-in-up">
+                                            <label className="text-[10px] uppercase tracking-wider font-bold text-slate-500 mb-1.5 block">Technical Requirements</label>
+                                            <textarea
+                                                value={technicalNeeds}
+                                                onChange={(e) => setTechnicalNeeds(e.target.value)}
+                                                className={`w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 text-white placeholder:text-slate-600 focus:outline-none focus:${currentTheme.border} focus:ring-2 focus:ring-opacity-20 transition-all text-sm min-h-[80px]`}
+                                                placeholder="e.g. I need 2 mics, a chair, and a DI box for my guitar..."
+                                                required
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="animate-fade-in-up grid grid-cols-2 gap-3">
+                                            <button
+                                                type="button"
+                                                onClick={() => setBackingTrack('karaoke')}
+                                                className={`p-3 rounded-xl border text-left transition-all ${backingTrack === 'karaoke'
+                                                    ? `${currentTheme.border} ${currentTheme.bg} ring-1 ring-${currentTheme.text}`
+                                                    : 'border-slate-800 bg-slate-950/30 hover:border-slate-700'
+                                                    }`}
+                                            >
+                                                <div className={`font-bold ${backingTrack === 'karaoke' ? currentTheme.text : 'text-slate-300'}`}>Karaoke Version</div>
+                                                <div className="text-xs text-slate-500 mt-1">No vocals, just the music</div>
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => setBackingTrack('original')}
+                                                className={`p-3 rounded-xl border text-left transition-all ${backingTrack === 'original'
+                                                    ? `${currentTheme.border} ${currentTheme.bg} ring-1 ring-${currentTheme.text}`
+                                                    : 'border-slate-800 bg-slate-950/30 hover:border-slate-700'
+                                                    }`}
+                                            >
+                                                <div className={`font-bold ${backingTrack === 'original' ? currentTheme.text : 'text-slate-300'}`}>Original Version</div>
+                                                <div className="text-xs text-slate-500 mt-1">With original vocals</div>
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
                             <button
                                 type="submit"
                                 disabled={loading}
                                 className={`w-full py-3.5 rounded-xl font-bold text-lg shadow-lg ${currentTheme.shadow} transition-all transform active:scale-[0.98] ${submitted
-                                        ? 'bg-green-500 text-white'
-                                        : `${currentTheme.button} text-white`
+                                    ? 'bg-green-500 text-white'
+                                    : `${currentTheme.button} text-white`
                                     }`}
                             >
                                 {loading ? (
