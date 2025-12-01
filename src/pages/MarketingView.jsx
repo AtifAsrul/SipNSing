@@ -38,16 +38,18 @@ const MarketingView = () => {
     useEffect(() => {
         const q = query(
             collection(db, 'requests'),
-            where('status', 'in', ['completed', 'rejected']),
             orderBy('createdAt', 'desc'),
-            limit(50)
+            limit(100) // Fetch last 100 to filter client-side
         );
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
-            const historyItems = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            }));
+            const historyItems = snapshot.docs
+                .map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }))
+                .filter(req => ['completed', 'rejected'].includes(req.status))
+                .slice(0, 50);
             setHistory(historyItems);
         });
         return () => unsubscribe();
@@ -71,10 +73,10 @@ const MarketingView = () => {
                         </span>
                     )}
                     <span className={`text-xs font-bold uppercase px-2 py-0.5 rounded-full ${req.status === 'playing' ? 'bg-purple-500/20 text-purple-400 animate-pulse' :
-                            req.status === 'queued' ? 'bg-green-500/20 text-green-400' :
-                                req.status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' :
-                                    req.status === 'completed' ? 'bg-blue-500/20 text-blue-400' :
-                                        'bg-red-500/20 text-red-400'
+                        req.status === 'queued' ? 'bg-green-500/20 text-green-400' :
+                            req.status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' :
+                                req.status === 'completed' ? 'bg-blue-500/20 text-blue-400' :
+                                    'bg-red-500/20 text-red-400'
                         }`}>
                         {req.status}
                     </span>
@@ -82,8 +84,8 @@ const MarketingView = () => {
                 <button
                     onClick={() => copyToClipboard(req.igHandle ? `@${req.igHandle}` : '', req.id)}
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${copiedId === req.id
-                            ? 'bg-green-500 text-white'
-                            : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                        ? 'bg-green-500 text-white'
+                        : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                         }`}
                 >
                     {copiedId === req.id ? (
@@ -126,8 +128,8 @@ const MarketingView = () => {
                     <button
                         onClick={() => setActiveTab('queue')}
                         className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'queue'
-                                ? 'bg-purple-600 text-white shadow-lg'
-                                : 'text-slate-500 hover:text-slate-300'
+                            ? 'bg-purple-600 text-white shadow-lg'
+                            : 'text-slate-500 hover:text-slate-300'
                             }`}
                     >
                         Live Queue ({queue.length})
@@ -135,8 +137,8 @@ const MarketingView = () => {
                     <button
                         onClick={() => setActiveTab('history')}
                         className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'history'
-                                ? 'bg-purple-600 text-white shadow-lg'
-                                : 'text-slate-500 hover:text-slate-300'
+                            ? 'bg-purple-600 text-white shadow-lg'
+                            : 'text-slate-500 hover:text-slate-300'
                             }`}
                     >
                         History

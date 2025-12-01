@@ -5,12 +5,15 @@ import AdminDashboard from './pages/AdminDashboard';
 import MarketingView from './pages/MarketingView';
 
 const AdminRoute = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('adminAuth') === 'true';
+  });
   const [pin, setPin] = useState('');
 
   const handleLogin = (e) => {
     e.preventDefault();
     if (pin === 'atifhensem') {
+      localStorage.setItem('adminAuth', 'true');
       setIsAuthenticated(true);
     } else {
       alert('Incorrect PIN');
