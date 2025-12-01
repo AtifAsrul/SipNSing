@@ -56,16 +56,18 @@ const AdminDashboard = () => {
 
         const q = query(
             collection(db, 'requests'),
-            where('status', 'in', ['completed', 'rejected']),
             orderBy('createdAt', 'desc'),
-            limit(50)
+            limit(100)
         );
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
-            const historyItems = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            }));
+            const historyItems = snapshot.docs
+                .map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }))
+                .filter(req => ['completed', 'rejected'].includes(req.status))
+                .slice(0, 50);
             setHistory(historyItems);
         });
 
