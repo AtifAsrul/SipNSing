@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import PublicView from './pages/PublicView';
 import AdminDashboard from './pages/AdminDashboard';
+import MarketingView from './pages/MarketingView';
 
 const AdminRoute = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -9,7 +10,7 @@ const AdminRoute = ({ children }) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (pin === '1234') {
+    if (pin === 'atifhensem') {
       setIsAuthenticated(true);
     } else {
       alert('Incorrect PIN');
@@ -53,6 +54,14 @@ function App() {
             element={
               <AdminRoute>
                 <AdminDashboard />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/marketing"
+            element={
+              <AdminRoute>
+                <MarketingView />
               </AdminRoute>
             }
           />

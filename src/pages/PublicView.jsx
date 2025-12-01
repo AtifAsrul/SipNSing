@@ -187,7 +187,7 @@ const PublicView = () => {
                         <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-1.5">
-                                    <label className="text-xs font-medium text-slate-400 ml-1">Your Name</label>
+                                    <label className="text-xs font-medium text-slate-400 ml-1">Performer Name(s)</label>
                                     <div className="relative group/input">
                                         <User className={`absolute left-3 top-3 w-5 h-5 text-slate-500 group-focus-within/input:${currentTheme.text} transition-colors`} />
                                         <input
@@ -195,13 +195,13 @@ const PublicView = () => {
                                             value={name}
                                             onChange={(e) => setName(e.target.value)}
                                             className={`w-full bg-slate-950/50 border border-slate-800 rounded-xl py-2.5 pl-10 pr-4 text-white placeholder:text-slate-600 focus:outline-none focus:${currentTheme.border} focus:ring-2 focus:ring-opacity-20 transition-all`}
-                                            placeholder="Name"
+                                            placeholder="Name 1, Name 2..."
                                             required
                                         />
                                     </div>
                                 </div>
                                 <div className="space-y-1.5">
-                                    <label className="text-xs font-medium text-slate-400 ml-1">IG Handle</label>
+                                    <label className="text-xs font-medium text-slate-400 ml-1">IG Handle(s)</label>
                                     <div className="relative group/input">
                                         <span className={`absolute left-3 top-2.5 text-slate-500 font-medium group-focus-within/input:${currentTheme.text} transition-colors`}>@</span>
                                         <input
@@ -209,7 +209,7 @@ const PublicView = () => {
                                             value={igHandle}
                                             onChange={(e) => setIgHandle(e.target.value)}
                                             className={`w-full bg-slate-950/50 border border-slate-800 rounded-xl py-2.5 pl-8 pr-4 text-white placeholder:text-slate-600 focus:outline-none focus:${currentTheme.border} focus:ring-2 focus:ring-opacity-20 transition-all`}
-                                            placeholder="username"
+                                            placeholder="@user1, @user2..."
                                         />
                                     </div>
                                 </div>
